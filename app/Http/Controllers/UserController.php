@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::query()
-            ->select("id", "username")
+            ->select("id", "name", "username")
             ->get();
 
         return view("user.index", compact("users"));
@@ -18,18 +19,48 @@ class UserController extends Controller
     
     public function create()
     {
+        return view("user.create");
     }
     
     public function store()
     {
+        $data = $this->validate(request(), [
+            "name" => "required|string",
+            "username" => "required|string|unique:users",
+            "password" => "required|string|confirmed",
+        ]);
+
+        User::create($data);
+
+        return redirect()
+            ->route("user.index")
+            ->with("message_text", __("messages.create.success"))
+            ->with("message_state", __("success"));
     }
     
     public function edit(User $user)
     {
+        return view("user.edit", compact("user"));
     }
     
     public function update(User $user)
     {
+        $data = $this->validate(request(), [
+            "name" => "required|string",
+            "username" => ["required", "string", Rule::unique("users")->ignore($user->id)],
+            "password" => "sometimes|nullable|string|confirmed",
+        ]);
+
+        if (empty($data["password"])) {
+            unset($data["password"]);
+        }
+
+        $user->update($data);
+
+        return redirect()
+            ->route("user.edit", $user)
+            ->with("message_text", __("messages.update.success"))
+            ->with("message_state", __("success"));
     }
     
     public function delete(User $user)

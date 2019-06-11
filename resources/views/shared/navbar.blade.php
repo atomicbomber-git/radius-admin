@@ -6,19 +6,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+
+                @can("index", App\Account::class)
                 <li class='nav-item {{ Route::is('account.*') ? 'active' : '' }}'>
                     <a class='nav-link' href='{{ route('account.index') }}'>
                         <i class='fa fa-users'></i>
                         Akun
                     </a>
                 </li>
+                @endcan
 
+                @can("index", App\User::class)
                 <li class='nav-item {{ Route::is('user.*') ? 'active' : '' }}'>
                     <a class='nav-link' href='{{ route('user.index') }}'>
                         <i class='fa fa-wrench'></i>
                         Admin
                     </a>
                 </li>
+                @endcan
             </div>
 
             @auth
