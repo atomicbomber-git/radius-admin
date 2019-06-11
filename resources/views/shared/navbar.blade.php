@@ -19,8 +19,28 @@
                         Admin
                     </a>
                 </li>
-                
             </div>
+
+            @auth
+            <div class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                        {{ auth()->user()->name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <form method='POST' action='{{ route('logout') }}' class="d-inline-block">
+                            @csrf
+                        
+                            <button class="btn btn-default">
+                                <i class="fa fa-sign-out"></i>
+                                Keluar
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            </div>
+            @endauth
         </div>
     </div>
 </nav>
