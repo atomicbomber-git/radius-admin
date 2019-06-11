@@ -53,7 +53,7 @@
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <form action='{{ route('account.delete', $account) }}' method='POST' class='d-inline-block'>
+                                <form action='{{ route('account.delete', $account) }}' method='POST' class='d-inline-block confirmed'>
                                     @csrf
                                     <button type='submit' class='btn btn-danger btn-sm'>
                                         Hapus

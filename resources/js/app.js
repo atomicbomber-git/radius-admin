@@ -6,4 +6,5 @@
  */
 
 require('./bootstrap');
-window.datatables_config = require("./datatables_config")
+window.swal = require('sweetalert')
+window.datatables_config = require('./datatables_config')

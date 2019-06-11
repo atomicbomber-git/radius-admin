@@ -13,5 +13,6 @@
     @yield('content')
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('extra-scripts')
+    @include('shared.sweetalert-confirmation')
 </body>
 </html>
