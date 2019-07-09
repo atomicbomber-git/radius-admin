@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Validation\Rule;
 use App\Enums\UserLevel;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -57,7 +58,17 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             "name" => "required|string",
             "username" => ["required", "string", Rule::unique("users")->ignore($user->id)],
-            "level" => Rule::in(array_keys(UserLevel::LEVELS)),
+            "level" => [
+                Rule::in(array_keys(UserLevel::LEVELS)),
+                /* A Superadmin can't downlevel himself into a regular Admin */
+                function ($attribute, $value, $fail) use($user) {
+                    if (Auth::user()->id === $user->id) {
+                        if ((Auth::user()->level === UserLevel::SUPER_ADMIN) && ($value === UserLevel::ADMIN)) {
+                            $fail("Anda tidak dapat menurunkan level akun Anda sendiri.");
+                        }
+                    }
+                },
+            ],
             "password" => "sometimes|nullable|string|confirmed",
         ]);
 

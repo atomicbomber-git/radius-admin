@@ -62,7 +62,7 @@
 
                 <div class="form-group">
                     <label for="level"> Level: </label>
-                    <select class="custom-select" name="level" id="level">
+                    <select class="custom-select {{ !$errors->has('level') ?: 'is-invalid' }}" name="level" id="level">
                         @foreach (\App\Enums\UserLevel::LEVELS as $key => $value)
                         <option
                             {{ old('level', $user->level) === $key ? "selected" : "" }}
@@ -71,6 +71,9 @@
                         </option>
                         @endforeach
                     </select>
+                    <div class='invalid-feedback'>
+                        {{ $errors->first('level') }}
+                    </div>
                 </div>
 
                 <div class="alert alert-info">
