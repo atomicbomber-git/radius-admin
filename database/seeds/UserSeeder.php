@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::transaction(function() {
-            factory(App\User::class, 99)->create();
+            factory(App\User::class, 20)->create();
         });
     }
 }

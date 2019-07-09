@@ -19,6 +19,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'username' => $faker->unique()->username,
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'level' => $faker->randomElement(array_keys(App\Enums\UserLevel::LEVELS)),
         'email_verified_at' => now(),
         'password' => Hash::make('secret'),
         'remember_token' => str_random(10),

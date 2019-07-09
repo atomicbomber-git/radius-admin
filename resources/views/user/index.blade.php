@@ -38,6 +38,7 @@
                             <th> # </th>
                             <th> Nama Asli </th>
                             <th> Nama Pengguna </th>
+                            <th> Level </th>
                             <th class="text-center"> Kendali </th>
                         </tr>
                    </thead>
@@ -47,6 +48,7 @@
                             <td> {{ $loop->iteration }}. </td>
                             <td> {{ $user->name }} </td>
                             <td> {{ $user->username }} </td>
+                            <td> {{ \App\Enums\UserLevel::LEVELS[$user->level] }} </td>
                             <td class="text-center">
                                 <a href="{{ route('user.edit', $user) }}" class="btn btn-info btn-sm">
                                     Sunting

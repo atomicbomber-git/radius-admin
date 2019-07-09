@@ -32,41 +32,52 @@
 
                 <div class='form-group'>
                     <label for='name'> Nama Asli: </label>
-                
+
                     <input
                         id='name' name='name' type='text'
                         placeholder='Nama Asli'
                         value='{{ old('name') }}'
                         class='form-control {{ !$errors->has('name') ?: 'is-invalid' }}'>
-                
+
                     <div class='invalid-feedback'>
                         {{ $errors->first('name') }}
                     </div>
                 </div>
-            
+
                 <div class='form-group'>
                     <label for='username'> Nama Pengguna: </label>
-                
+
                     <input
                         id='username' name='username' type='text'
                         placeholder='Nama Pengguna'
                         value='{{ old('username') }}'
                         class='form-control {{ !$errors->has('username') ?: 'is-invalid' }}'>
-                
+
                     <div class='invalid-feedback'>
                         {{ $errors->first('username') }}
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="level"></label>
+                    <select class="custom-select" name="level" id="level">
+                        @foreach (\App\Enums\UserLevel::LEVELS as $key => $value)
+                        <option value="{{ $key }}">
+                            {{ $value }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class='form-group'>
                     <label for='password'> Kata Sandi: </label>
-                
+
                     <input
                         id='password' name='password' type='password'
                         placeholder='Kata Sandi'
                         value='{{ old('password') }}'
                         class='form-control {{ !$errors->has('password') ?: 'is-invalid' }}'>
-                
+
                     <div class='invalid-feedback'>
                         {{ $errors->first('password') }}
                     </div>
@@ -74,13 +85,13 @@
 
                 <div class='form-group'>
                     <label for='password_confirmation'> Ulangi Kata Sandi: </label>
-                
+
                     <input
                         id='password_confirmation' name='password_confirmation' type='password'
                         placeholder='Ulangi Kata Sandi'
                         value='{{ old('password_confirmation') }}'
                         class='form-control {{ !$errors->has('password_confirmation') ?: 'is-invalid' }}'>
-                
+
                     <div class='invalid-feedback'>
                         {{ $errors->first('password_confirmation') }}
                     </div>

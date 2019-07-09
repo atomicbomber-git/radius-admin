@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Enums\UserLevel;
 
 class UserPolicy
 {
@@ -11,7 +12,7 @@ class UserPolicy
 
     public function index(User $user)
     {
-        return true;
+        return $user->level == UserLevel::SUPER_ADMIN;
     }
 
     /**
@@ -34,7 +35,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->level == UserLevel::SUPER_ADMIN;
     }
 
     /**
@@ -46,7 +47,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->level == UserLevel::SUPER_ADMIN;
     }
 
     /**
@@ -58,7 +59,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->id !== $model->id;
+        return ($user->level == UserLevel::SUPER_ADMIN) && ($user->id !== $model->id);
     }
 
     /**

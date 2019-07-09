@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Validation\Rule;
 
@@ -10,20 +9,25 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize("index", User::class);
+
         $users = User::query()
-            ->select("id", "name", "username")
+            ->select("id", "name", "username", "level")
             ->get();
 
         return view("user.index", compact("users"));
     }
-    
+
     public function create()
     {
+        $this->authorize("create", User::class);
         return view("user.create");
     }
-    
+
     public function store()
     {
+        $this->authorize("create", User::class);
+
         $data = $this->validate(request(), [
             "name" => "required|string",
             "username" => "required|string|unique:users",
@@ -37,14 +41,17 @@ class UserController extends Controller
             ->with("message_text", __("messages.create.success"))
             ->with("message_state", __("success"));
     }
-    
+
     public function edit(User $user)
     {
+        $this->authorize("update", $user);
         return view("user.edit", compact("user"));
     }
-    
+
     public function update(User $user)
     {
+        $this->authorize("update", $user);
+
         $data = $this->validate(request(), [
             "name" => "required|string",
             "username" => ["required", "string", Rule::unique("users")->ignore($user->id)],
@@ -62,7 +69,7 @@ class UserController extends Controller
             ->with("message_text", __("messages.update.success"))
             ->with("message_state", __("success"));
     }
-    
+
     public function delete(User $user)
     {
         $user->delete();
