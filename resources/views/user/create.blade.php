@@ -59,10 +59,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="level"></label>
+                    <label for="level"> Level: </label>
                     <select class="custom-select" name="level" id="level">
                         @foreach (\App\Enums\UserLevel::LEVELS as $key => $value)
-                        <option value="{{ $key }}">
+                        <option
+                            {{ old('level') === $key ? "selected" : "" }}
+                            value="{{ $key }}">
                             {{ $value }}
                         </option>
                         @endforeach

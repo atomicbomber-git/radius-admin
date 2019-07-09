@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Validation\Rule;
+use App\Enums\UserLevel;
 
 class UserController extends Controller
 {
@@ -31,6 +32,7 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             "name" => "required|string",
             "username" => "required|string|unique:users",
+            "level" => Rule::in(array_keys(UserLevel::LEVELS)),
             "password" => "required|string|confirmed",
         ]);
 
@@ -55,6 +57,7 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             "name" => "required|string",
             "username" => ["required", "string", Rule::unique("users")->ignore($user->id)],
+            "level" => Rule::in(array_keys(UserLevel::LEVELS)),
             "password" => "sometimes|nullable|string|confirmed",
         ]);
 
