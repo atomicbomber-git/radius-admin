@@ -79,7 +79,9 @@ class UserController extends Controller
             unset($data["password"]);
         }
 
-        $user->update($data);
+        $user->update(array_merge($data, [
+            "password" => Hash::make($data["password"])
+        ]));
 
         return redirect()
             ->route("user.edit", $user)
