@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Validation\Rule;
 use App\Enums\UserLevel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -37,7 +38,9 @@ class UserController extends Controller
             "password" => "required|string|confirmed",
         ]);
 
-        User::create($data);
+        User::create(array_merge($data, [
+            "password" => Hash::make($data["password"])
+        ]));
 
         return redirect()
             ->route("user.index")
