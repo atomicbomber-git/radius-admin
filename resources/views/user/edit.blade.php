@@ -85,7 +85,7 @@
                     <label for='password'> Kata Sandi: </label>
 
                     <input
-                        id='password' name='password' type='text'
+                        id='password' name='password' type='password'
                         placeholder='Kata Sandi'
                         value='{{ old('password') }}'
                         class='form-control {{ !$errors->has('password') ?: 'is-invalid' }}'>
@@ -99,7 +99,7 @@
                     <label for='password_confirmation'> Ulangi Kata Sandi: </label>
 
                     <input
-                        id='password_confirmation' name='password_confirmation' type='text'
+                        id='password_confirmation' name='password_confirmation' type='password'
                         placeholder='Ulangi Kata Sandi'
                         value='{{ old('password_confirmation') }}'
                         class='form-control {{ !$errors->has('password_confirmation') ?: 'is-invalid' }}'>
